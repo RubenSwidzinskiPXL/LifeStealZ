@@ -104,7 +104,60 @@ public class AfterlifeWorldManager {
         if (world == null) {
             return null;
         }
-        return world.getSpawnLocation();
+        return getSafeSpawnLocation(world);
+    }
+
+    /**
+     * Find a safe spawn location, ensuring the player won't suffocate.
+     * @param world The afterlife world
+     * @return A safe spawn location
+     */
+    private Location getSafeSpawnLocation(World world) {
+        Location spawn = world.getSpawnLocation();
+        
+        // Add 0.5 to center on block and ensure proper Y positioning
+        spawn.setX(spawn.getBlockX() + 0.5);
+        spawn.setZ(spawn.getBlockZ() + 0.5);
+        
+        // Check if current spawn is safe (two air blocks above solid ground)
+        if (isSafeLocation(spawn)) {
+            return spawn;
+        }
+        
+        // If not safe, search upward for safe location
+        for (int y = spawn.getBlockY(); y < world.getMaxHeight() - 2; y++) {
+            Location check = spawn.clone();
+            check.setY(y);
+            if (isSafeLocation(check)) {
+                return check;
+            }
+        }
+        
+        // Fallback: place player well above ground
+        spawn.setY(spawn.getBlockY() + 3);
+        return spawn;
+    }
+
+    /**
+     * Check if a location is safe for player spawning (no suffocation).
+     * @param loc Location to check
+     * @return true if safe
+     */
+    private boolean isSafeLocation(Location loc) {
+        World world = loc.getWorld();
+        if (world == null) return false;
+        
+        int x = loc.getBlockX();
+        int y = loc.getBlockY();
+        int z = loc.getBlockZ();
+        
+        // Check feet, body, and head positions
+        org.bukkit.block.Block feet = world.getBlockAt(x, y, z);
+        org.bukkit.block.Block body = world.getBlockAt(x, y + 1, z);
+        
+        // Both blocks must be air or passable
+        return (feet.isPassable() || feet.getType().isAir()) && 
+               (body.isPassable() || body.getType().isAir());
     }
 
     /**

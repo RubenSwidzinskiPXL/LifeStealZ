@@ -102,7 +102,7 @@ public final class AfterlifeSubCommand implements SubCommand {
                     return true;
                 }
                 String profileLoad = args[3].toLowerCase();
-                boolean okLoad = plugin.getAfterlifeManager().inventoryManager.loadProfile(targetLoad, profileLoad);
+                boolean okLoad = plugin.getAfterlifeManager().getInventoryManager().loadProfile(targetLoad, profileLoad);
                 sender.sendMessage(MessageUtils.formatMsg(okLoad ? "&aLoaded inventory profile '&f" + profileLoad + "&a' for &f" + targetLoad.getName() : "&cNo stored inventory for '&f" + profileLoad + "&c'."));
                 return true;
 
@@ -121,7 +121,7 @@ public final class AfterlifeSubCommand implements SubCommand {
                     return true;
                 }
                 String profileClear = args[3].toLowerCase();
-                plugin.getAfterlifeManager().inventoryManager.clearStoredProfile(targetClear.getUniqueId(), profileClear);
+                plugin.getAfterlifeManager().getInventoryManager().clearStoredProfile(targetClear.getUniqueId(), profileClear);
                 sender.sendMessage(MessageUtils.formatMsg("&aCleared stored inventory profile '&f" + profileClear + "&a' for &f" + targetClear.getName()));
                 return true;
 

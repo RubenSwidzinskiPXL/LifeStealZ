@@ -27,6 +27,10 @@ public class AfterlifeManager {
         return worldManager;
     }
     
+    public com.zetaplugins.lifestealz.util.InventoryManager getInventoryManager() {
+        return inventoryManager;
+    }
+    
     /**
      * Send a player to the afterlife.
      * @param player The player to send

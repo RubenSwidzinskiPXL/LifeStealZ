@@ -326,6 +326,10 @@ public final class PlayerDeathListener implements Listener {
 
             // Afterlife takes precedence over bans or revive-respawn logic
             if (plugin.getConfig().getBoolean("afterlife.enabled", false)) {
+                // Set player to 0 hearts (eliminated state) before sending to afterlife
+                playerData.setMaxHealth(0.0);
+                plugin.getStorage().save(playerData);
+                
                 // Send to afterlife instead of banning or respawning
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getAfterlifeManager().sendPlayerToAfterlife(player), 1L);
 
