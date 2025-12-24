@@ -4,9 +4,9 @@
 
 ![paper](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/paper_vector.svg)
 ![purpur](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/purpur_vector.svg)
-[![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_vector.svg)](https://github.com/KartoffelChipss/lifestealz)
+[![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/github_vector.svg)](https://github.com/ZetaPlugins/LifeStealZ)
 [![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/modrinth_vector.svg)](https://modrinth.com/plugin/lifestealz)
-[![hangar](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/hangar_vector.svg)](https://hangar.papermc.io/KartoffelChipss/LifestealZ)
+[![hangar](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/available/hangar_vector.svg)](https://hangar.papermc.io/ZetaPlugins/LifeStealZ)
 [![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/social/discord-plural_vector.svg)](https://strassburger.org/discord)
 [![gitbook](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/documentation/gitbook_vector.svg)](https://docs.zetaplugins.com/lifestealz)
 [![generic-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/translate/generic-plural_vector.svg)](https://gitlocalize.com/repo/10381)
@@ -15,6 +15,17 @@
 LifeStealZ is a lifesteal SMP plugin, that allows you to steal hearts from other players, when you kill them. If a player has no more hearts, he is eliminated. You can craft additional hearts or a revive crystal. With this crystal, you can bring back eliminated teammates.
 
 LifeStealZ offers a great amount of admin tools and is highly customizable. You can change every message and change everything about the custom items.
+
+**Credits & Fork Enhancements**
+
+LifeStealZ was originally created and maintained by [KartoffelChipss / ZetaPlugins](https://github.com/KartoffelChipss). This fork keeps the same documentation style while adding:
+
+* ✅ Timed afterlife release that returns players with configurable hearts and a command allowlist while they wait
+* ✅ Custom afterlife generators (default, void, or island) alongside generate/regenerate/admin world controls
+* ✅ Optional inventory wipe plus separate inventories between main and afterlife worlds
+* ✅ Floodgate/Geyser friendly player handling and stored bedrock profiles
+* ✅ Anti-alt detection hooks with optional prevention, logging, and admin-defined commands
+* ✅ Webhooks for eliminations/revives plus heart gain cooldown and grace-period withdraw toggles
 
 <br>
 
