@@ -84,6 +84,11 @@ public final class AfterlifeRestrictionListener implements Listener {
             return;
         }
         
+        // Allow admins and ops to use any command
+        if (player.isOp() || player.hasPermission("lifestealz.admin")) {
+            return;
+        }
+        
         String command = event.getMessage().toLowerCase().split(" ")[0];
         
         // Get allowed commands from config

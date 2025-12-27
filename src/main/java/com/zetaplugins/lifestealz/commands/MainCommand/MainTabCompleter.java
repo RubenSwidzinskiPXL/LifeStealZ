@@ -54,7 +54,7 @@ public final class MainTabCompleter implements TabCompleter {
         String input = args[1].toLowerCase();
         switch (args[0]) {
             case "afterlife":
-                return getDisplayOptions(List.of("generate", "tp", "regen", "info", "invload", "invclear"), input);
+                return getDisplayOptions(List.of("generate", "tp", "regen", "info", "invload", "invclear", "sethearts", "setreturnhearts"), input);
             case "hearts":
                 return getDisplayOptions(List.of("add", "set", "remove", "get"), input);
             case "giveItem":

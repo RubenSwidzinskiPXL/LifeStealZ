@@ -245,8 +245,10 @@ afterlife:
   # How long (in seconds) players stay in the afterlife before being automatically released
   # 3600 = 1 hour, 7200 = 2 hours, 86400 = 24 hours
   duration-seconds: 3600
+  # Number of hearts players have while in the afterlife (lifesteal is disabled in afterlife)
+  afterlife-hearts: 10
   # Number of hearts to give players when they are released from the afterlife
-  revive-hearts: 10
+  return-hearts: 2
   # Name of the afterlife world (will be created if it doesn't exist)
   world-name: "afterlife"
   # Name of the world players return to after being released

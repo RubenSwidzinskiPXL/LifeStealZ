@@ -21,12 +21,62 @@ public final class AfterlifeSubCommand implements SubCommand {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(MessageUtils.formatMsg("&cUsage: /lifestealz afterlife <generate|tp|regen|info|invload|invclear>"));
+            sender.sendMessage(MessageUtils.formatMsg("&cUsage: /lifestealz afterlife <generate|tp|regen|info|invload|invclear|sethearts|setreturnhearts>"));
             return true;
         }
 
         String action = args[1].toLowerCase();
         switch (action) {
+            case "sethearts":
+                if (!sender.hasPermission("lifestealz.admin.afterlife.sethearts")) {
+                    CommandUtils.throwPermissionError(sender);
+                    return false;
+                }
+                if (args.length < 3) {
+                    int currentHearts = plugin.getConfig().getInt("afterlife.afterlife-hearts", 10);
+                    sender.sendMessage(MessageUtils.formatMsg("&7Current afterlife hearts: &f" + currentHearts));
+                    sender.sendMessage(MessageUtils.formatMsg("&cUsage: /lifestealz afterlife sethearts <amount>"));
+                    return true;
+                }
+                try {
+                    int hearts = Integer.parseInt(args[2]);
+                    if (hearts < 1 || hearts > 20) {
+                        sender.sendMessage(MessageUtils.formatMsg("&cHearts must be between 1 and 20."));
+                        return true;
+                    }
+                    plugin.getConfig().set("afterlife.afterlife-hearts", hearts);
+                    plugin.saveConfig();
+                    sender.sendMessage(MessageUtils.formatMsg("&aAfterlife hearts set to &f" + hearts + "&a. Players in afterlife will have this many hearts."));
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(MessageUtils.formatMsg("&cInvalid number: " + args[2]));
+                }
+                return true;
+
+            case "setreturnhearts":
+                if (!sender.hasPermission("lifestealz.admin.afterlife.setreturnhearts")) {
+                    CommandUtils.throwPermissionError(sender);
+                    return false;
+                }
+                if (args.length < 3) {
+                    int currentReturnHearts = plugin.getConfig().getInt("afterlife.return-hearts", 2);
+                    sender.sendMessage(MessageUtils.formatMsg("&7Current return hearts: &f" + currentReturnHearts));
+                    sender.sendMessage(MessageUtils.formatMsg("&cUsage: /lifestealz afterlife setreturnhearts <amount>"));
+                    return true;
+                }
+                try {
+                    int hearts = Integer.parseInt(args[2]);
+                    if (hearts < 1 || hearts > 20) {
+                        sender.sendMessage(MessageUtils.formatMsg("&cHearts must be between 1 and 20."));
+                        return true;
+                    }
+                    plugin.getConfig().set("afterlife.return-hearts", hearts);
+                    plugin.saveConfig();
+                    sender.sendMessage(MessageUtils.formatMsg("&aReturn hearts set to &f" + hearts + "&a. Players will have this many hearts when released from afterlife."));
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(MessageUtils.formatMsg("&cInvalid number: " + args[2]));
+                }
+                return true;
+
             case "generate":
                 if (!sender.hasPermission("lifestealz.admin.afterlife.generate")) {
                     CommandUtils.throwPermissionError(sender);
@@ -126,7 +176,7 @@ public final class AfterlifeSubCommand implements SubCommand {
                 return true;
 
             default:
-                sender.sendMessage(MessageUtils.formatMsg("&cUnknown subcommand. Usage: /lifestealz afterlife <generate|tp|regen|info|invload|invclear>"));
+                sender.sendMessage(MessageUtils.formatMsg("&cUnknown subcommand. Usage: /lifestealz afterlife <generate|tp|regen|info|invload|invclear|sethearts|setreturnhearts>"));
                 return true;
         }
     }
@@ -142,7 +192,7 @@ public final class AfterlifeSubCommand implements SubCommand {
 
     @Override
     public String getUsage() {
-        return "/lifestealz afterlife <generate|tp|regen|info|invload|invclear>";
+        return "/lifestealz afterlife <generate|tp|regen|info|invload|invclear|sethearts|setreturnhearts>";
     }
 
     @Override
@@ -152,6 +202,8 @@ public final class AfterlifeSubCommand implements SubCommand {
             || sender.hasPermission("lifestealz.admin.afterlife.regen")
             || sender.hasPermission("lifestealz.admin.afterlife.info")
             || sender.hasPermission("lifestealz.admin.afterlife.invload")
-            || sender.hasPermission("lifestealz.admin.afterlife.invclear");
+            || sender.hasPermission("lifestealz.admin.afterlife.invclear")
+            || sender.hasPermission("lifestealz.admin.afterlife.sethearts")
+            || sender.hasPermission("lifestealz.admin.afterlife.setreturnhearts");
     }
 }

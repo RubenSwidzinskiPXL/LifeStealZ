@@ -53,14 +53,14 @@ public class AfterlifeManager {
         long durationSeconds = plugin.getConfig().getLong("afterlife.duration-seconds", 3600);
         data.setAfterlifeReleaseTime(System.currentTimeMillis() + (durationSeconds * 1000));
         
-        // Fix hearts to configured amount while in afterlife
-        int fixedHearts = plugin.getConfig().getInt("afterlife.fixed-hearts", plugin.getConfig().getInt("afterlife.revive-hearts", 10));
-        data.setMaxHealth(fixedHearts * 2);
+        // Fix hearts to configured amount while in afterlife (default 10 hearts)
+        int afterlifeHearts = plugin.getConfig().getInt("afterlife.afterlife-hearts", 10);
+        data.setMaxHealth(afterlifeHearts * 2);
         plugin.getStorage().save(data);
         LifeStealZ.setMaxHealth(player, data.getMaxHealth());
         
-        // Restore health and handle inventory separation
-        player.setHealth(20.0);
+        // Restore health to full
+        player.setHealth(afterlifeHearts * 2.0);
         boolean separateInv = plugin.getConfig().getBoolean("afterlife.separate-inventories", true);
         if (separateInv) {
             inventoryManager.saveProfile(player, "main");
@@ -119,9 +119,9 @@ public class AfterlifeManager {
         data.setLifeState(LifeState.ALIVE);
         data.setAfterlifeReleaseTime(0L);
         
-        // Set hearts to revive amount
-        int reviveHearts = plugin.getConfig().getInt("afterlife.revive-hearts", 10);
-        data.setMaxHealth(reviveHearts * 2);
+        // Set hearts to return amount (separate from afterlife hearts)
+        int returnHearts = plugin.getConfig().getInt("afterlife.return-hearts", 2);
+        data.setMaxHealth(returnHearts * 2);
         data.setHasBeenRevived(data.getHasBeenRevived() + 1);
         
         plugin.getStorage().save(data);
@@ -148,11 +148,11 @@ public class AfterlifeManager {
             false,
             "afterlifeRelease",
             "&aYou have been revived! You now have &e%hearts% &ahearts.",
-            new MessageUtils.Replaceable("%hearts%", String.valueOf(reviveHearts))
+            new MessageUtils.Replaceable("%hearts%", String.valueOf(returnHearts))
         );
         player.sendMessage(message);
         
-        plugin.getLogger().info(player.getName() + " has been released from the afterlife with " + reviveHearts + " hearts");
+        plugin.getLogger().info(player.getName() + " has been released from the afterlife with " + returnHearts + " hearts");
     }
     
     /**
